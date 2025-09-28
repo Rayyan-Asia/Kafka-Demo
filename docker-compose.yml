@@ -1,0 +1,37 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kafka-app
+    environment:
+      - MONGO_HOST=mongo-db
+      - MONGO_PORT=27017
+    ports:
+      - "8081:8081"
+    networks:
+      - Kafka-network
+    depends_on:
+      - mongo-db
+    restart: on-failure
+
+  mongo-db:
+    image: mongo:6.0
+    container_name: mymongo
+    ports:
+      - "27017:27017"
+    networks:
+      - Kafka-network
+    volumes:
+      - mongo-volume:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=mydb
+
+networks:
+  Kafka-network:
+
+volumes:
+  mongo-volume:
