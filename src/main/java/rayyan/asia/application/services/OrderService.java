@@ -5,6 +5,6 @@ import rayyan.asia.representation.dtos.OrderDto;
 
 public interface OrderService {
 
-    public OrderDto getOrder(ObjectId id);
+    OrderDto getOrder(ObjectId id);
     
 }
