@@ -1,4 +1,10 @@
 package rayyan.asia.application.services;
 
+import org.bson.types.ObjectId;
+import rayyan.asia.representation.dtos.OrderDto;
+
 public interface OrderService {
+
+    public OrderDto getOrder(ObjectId id);
+    
 }
