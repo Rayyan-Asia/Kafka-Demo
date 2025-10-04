@@ -6,5 +6,8 @@ import rayyan.asia.representation.dtos.OrderDto;
 public interface OrderService {
 
     OrderDto getOrder(ObjectId id);
-    
+
+    OrderDto upsertDto(OrderDto orderDto);
+
+    void deleteOrder(ObjectId id);
 }

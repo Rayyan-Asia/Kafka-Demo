@@ -7,4 +7,7 @@ public interface InvoiceService {
 
     InvoiceDto getInvoice(ObjectId id);
 
+    InvoiceDto upsertInvoice(InvoiceDto invoice);
+
+    void deleteInvoice(ObjectId id);
 }

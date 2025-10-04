@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import rayyan.asia.domain.subclass.EntryItem;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,6 +14,8 @@ import java.util.List;
 @Accessors(chain = true)
 @Document(collection = "orders")
 public class Order extends BaseEntity {
+
+    @NotEmpty
     private List<EntryItem> items;
     private Status status = Status.PENDING;
 }
