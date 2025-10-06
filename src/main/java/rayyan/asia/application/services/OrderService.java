@@ -9,5 +9,8 @@ public interface OrderService {
 
     OrderDto upsertDto(OrderDto orderDto);
 
+    OrderDto completeOrder(ObjectId id);
+
     void deleteOrder(ObjectId id);
 }
+

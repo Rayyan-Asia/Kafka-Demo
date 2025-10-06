@@ -7,7 +7,16 @@ public interface InvoiceService {
 
     InvoiceDto getInvoice(ObjectId id);
 
-    InvoiceDto upsertInvoice(InvoiceDto invoice);
+    InvoiceDto updateInvoice(InvoiceDto invoice);
 
     void deleteInvoice(ObjectId id);
+
+    void handleOrderCompleted(String orderIdHex);
+
+    /**
+     * Return a presigned URL (or direct URL) that allows downloading the invoice PDF stored in S3.
+     * @param id invoice id
+     * @return presigned URL string
+     */
+    String getInvoiceUrl(ObjectId id);
 }

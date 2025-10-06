@@ -1,0 +1,75 @@
+package rayyan.asia.application.services;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
+@Service
+public class S3ServiceImpl implements S3Service {
+
+    private final S3Client s3Client;
+
+    @Value("${aws.s3.bucket}")
+    private String bucket;
+
+    public S3ServiceImpl(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
+    public String upload(MultipartFile file) throws IOException {
+        String filename = Objects.requireNonNull(file.getOriginalFilename());
+        String key = UUID.randomUUID().toString() + "_" + filename;
+
+        PutObjectRequest putReq = PutObjectRequest.builder()
+                .bucket(bucket)
+                .key(key)
+                .contentType(file.getContentType())
+                .build();
+
+        s3Client.putObject(putReq, RequestBody.fromBytes(file.getBytes()));
+        return key;
+    }
+
+    public String uploadBytes(byte[] data, String filename, String contentType) throws IOException {
+        String key = UUID.randomUUID() + "_" + filename;
+
+        PutObjectRequest putReq = PutObjectRequest.builder()
+                .bucket(bucket)
+                .key(key)
+                .contentType(contentType)
+                .build();
+
+        s3Client.putObject(putReq, RequestBody.fromBytes(data));
+        return key;
+    }
+
+    public byte[] getFileBytes(String key) {
+        GetObjectRequest getReq = GetObjectRequest.builder()
+                .bucket(bucket)
+                .key(key)
+                .build();
+
+        ResponseBytes<GetObjectResponse> resp = s3Client.getObjectAsBytes(getReq);
+        return resp.asByteArray();
+    }
+
+    public InputStream getFileStream(String key) {
+        GetObjectRequest getReq = GetObjectRequest.builder()
+                .bucket(bucket)
+                .key(key)
+                .build();
+
+        return s3Client.getObject(getReq);
+    }
+}

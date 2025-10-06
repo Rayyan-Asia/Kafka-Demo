@@ -6,5 +6,6 @@ import org.bson.types.ObjectId;
 @Data
 public class InvoiceDto {
     private ObjectId id;
-    private String s3Location;
+    private ObjectId orderId;
+    private String s3Key;
 }

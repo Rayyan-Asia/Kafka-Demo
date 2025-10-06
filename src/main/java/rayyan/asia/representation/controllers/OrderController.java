@@ -42,6 +42,15 @@ public class OrderController {
         return orderService.upsertDto(orderDto);
     }
 
+    // Mark Order as completed
+    @PutMapping("/complete/{id}")
+    public OrderDto completeOrder(@PathVariable("id") String id) {
+        if (!ObjectId.isValid(id)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid order id: " + id);
+        }
+        return orderService.completeOrder(new ObjectId(id));
+    }
+
     @DeleteMapping("/{id}")
     public void deleteOrder(@PathVariable("id") String id) {
         if (!ObjectId.isValid(id)) {
