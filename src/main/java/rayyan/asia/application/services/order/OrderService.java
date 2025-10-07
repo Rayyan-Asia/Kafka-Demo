@@ -1,4 +1,4 @@
-package rayyan.asia.application.services;
+package rayyan.asia.application.services.order;
 
 import org.bson.types.ObjectId;
 import rayyan.asia.representation.dtos.OrderDto;

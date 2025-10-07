@@ -1,4 +1,4 @@
-package rayyan.asia.application.services;
+package rayyan.asia.application.services.storage;
 
 import java.io.IOException;
 import java.io.InputStream;

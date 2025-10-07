@@ -1,4 +1,4 @@
-package rayyan.asia.application.services;
+package rayyan.asia.application.services.pdf;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;

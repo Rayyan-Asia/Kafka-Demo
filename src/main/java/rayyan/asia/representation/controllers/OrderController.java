@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import rayyan.asia.application.services.OrderService;
+import rayyan.asia.application.services.order.OrderService;
 import rayyan.asia.representation.dtos.OrderDto;
 
 import javax.annotation.Nonnull;

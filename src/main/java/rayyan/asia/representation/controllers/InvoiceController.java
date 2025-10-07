@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import rayyan.asia.application.services.InvoiceService;
+import rayyan.asia.application.services.invoice.InvoiceService;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
