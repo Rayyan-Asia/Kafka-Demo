@@ -61,6 +61,15 @@ public class OrderServiceImpl implements  OrderService {
         return orderMapper.toDto(order);
     }
 
+    @Override
+    @Transactional
+    public void deleteOrder(ObjectId id) {
+        if (!orderRepository.existsById(id)) {
+            throw new NoSuchElementException("Order not found: " + id);
+        }
+        orderRepository.deleteById(id);
+    }
+
     private void publishCreateInvoice(ObjectId id) {
         try {
             String key = id.toHexString();
@@ -71,14 +80,5 @@ public class OrderServiceImpl implements  OrderService {
         } catch (Exception e) {
             LOG.error("Exception while publishing kafka message for order {}", id, e);
         }
-    }
-
-    @Override
-    @Transactional
-    public void deleteOrder(ObjectId id) {
-        if (!orderRepository.existsById(id)) {
-            throw new NoSuchElementException("Order not found: " + id);
-        }
-        orderRepository.deleteById(id);
     }
 }
