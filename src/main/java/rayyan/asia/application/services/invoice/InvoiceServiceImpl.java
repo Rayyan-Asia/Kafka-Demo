@@ -62,7 +62,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             Order order = orderRepository.findById(orderId).orElse(null);
             if (order == null) {
                 LOG.warn("Order not found in DB for id={}, skipping invoice generation", orderIdHex);
-                return;
+                throw new NoSuchElementException("Order not found: " + orderIdHex);
             }
 
             // generate PDF bytes using the PdfGeneratorService
@@ -76,8 +76,12 @@ public class InvoiceServiceImpl implements InvoiceService {
             LOG.info("Created invoice for order {} and uploaded to s3 key={}", orderIdHex, s3Key);
         } catch (IOException ex) {
             LOG.error("I/O error while processing order-completed message for {}", orderIdHex, ex);
+            // rethrow so the error handler can send the record to DLQ
+            throw new RuntimeException(ex);
         } catch (Exception ex) {
             LOG.error("Failed to process order-completed message for {}", orderIdHex, ex);
+            // rethrow so the error handler can send the record to DLQ
+            throw new RuntimeException(ex);
         }
     }
 
